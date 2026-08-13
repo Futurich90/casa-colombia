@@ -163,6 +163,29 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
       {/* Suelo */}
       <rect x={0} y={GROUND_Y} width={800} height={600 - GROUND_Y} fill="var(--color-cemento-500)" opacity={0.25} />
 
+      {/*
+        Plano de referencia: la silueta completa de la casa, siempre presente
+        desde 0%. Es lo que falta por construir — a medida que cada etapa
+        aparece con su propio elemento sólido, va tapando el trazo punteado
+        que está debajo. Nunca se anima ni se oculta.
+      */}
+      <g
+        aria-hidden
+        fill="none"
+        stroke="var(--color-cemento-500)"
+        strokeWidth={1.5}
+        strokeDasharray="5 5"
+        opacity={0.4}
+      >
+        <rect x={WALL_X - 10} y={WALL_BOTTOM} width={WALL_W + 20} height={GROUND_Y - WALL_BOTTOM} />
+        <rect x={WALL_X} y={WALL_TOP} width={WALL_W} height={WALL_BOTTOM - WALL_TOP} />
+        <rect x={WALL_X + 24} y={WALL_TOP + 20} width={54} height={54} />
+        <rect x={WALL_X + WALL_W - 78} y={WALL_TOP + 20} width={54} height={54} />
+        <rect x={WALL_X + WALL_W / 2 - 30} y={WALL_BOTTOM - 90} width={60} height={90} />
+        <path d={`M${roofEaveLeft.x} ${roofEaveLeft.y} L${ROOF_APEX.x} ${ROOF_APEX.y} L${roofEaveRight.x} ${roofEaveRight.y}`} />
+        <rect x={chimneyBase.x - 9} y={chimneyBase.y - 42} width={18} height={44} />
+      </g>
+
       {/* Etapa 1 — Terreno y replanteo */}
       <motion.g style={{ opacity: reducedMotion ? terrenoOpacity.get() : terrenoOpacity }}>
         <line x1={200} y1={GROUND_Y} x2={600} y2={GROUND_Y} stroke="var(--color-cemento-700)" strokeWidth={2} strokeDasharray="4 6" />
