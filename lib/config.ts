@@ -3,8 +3,7 @@
  * los valores que cambian según la campaña activa.
  */
 export const config = {
-  /** TODO: reemplazar por la URL real de la VAKI cuando esté disponible. */
-  vakiUrl: "https://vaki.co/es/vaki/PLACEHOLDER",
+  vakiUrl: "https://vaki.co/vaki/juntos-por-colombia-fspc",
   metaCOP: 1_000_000_000,
   organizacion: "Casa Colombia",
   zonasAfectadas: [
