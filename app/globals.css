@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------
+   Casa Colombia — design tokens
+   Paleta tierra/materiales con acento vivo de luz encendida.
+   Ver memoria de dirección de arte para el racional de cada valor.
+--------------------------------------------------------- */
+:root {
+  /* Cemento — escala neutra */
+  --color-cemento-900: #1c1a17;
+  --color-cemento-700: #3d3833;
+  --color-cemento-500: #6b6259;
+  --color-cemento-300: #b8afa3;
+  --color-cemento-100: #e8e3da;
+
+  /* Arcilla — ladrillo, acento cálido primario */
+  --color-arcilla-700: #7a4029;
+  --color-arcilla-500: #a85c3e;
+  --color-arcilla-300: #c98868;
+
+  /* Madera — vigas, estructura */
+  --color-madera-700: #5f4a2c;
+  --color-madera-500: #8b6f47;
+
+  /* Cal — "blanco" cálido, fondos de card */
+  --color-cal-100: #f5f1e8;
+  --color-cal-050: #faf7f0;
+
+  /* Acentos vivos (bandera, con moderación) */
+  --color-acento-amarillo-700: #b6851f;
+  --color-acento-amarillo-500: #e8b23d;
+  --color-acento-amarillo-300: #f0cd7c;
+  --color-acento-azul-700: #2a4155;
+  --color-acento-azul-500: #3d5a73;
+
+  /* Estado (no decorativo) */
+  --color-estado-error: #8b3a3a;
+  --color-estado-exito: #4a6b4d;
+
+  /* Superficie/texto por defecto (light) */
+  --background: var(--color-cal-050);
+  --foreground: var(--color-cemento-900);
+
+  /* Tipografía fluida */
+  --font-size-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.85rem);
+  --font-size-sm: clamp(0.875rem, 0.84rem + 0.18vw, 1rem);
+  --font-size-base: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1.06rem + 0.32vw, 1.375rem);
+  --font-size-xl: clamp(1.375rem, 1.27rem + 0.5vw, 1.75rem);
+  --font-size-2xl: clamp(1.75rem, 1.55rem + 0.9vw, 2.5rem);
+  --font-size-3xl: clamp(2.25rem, 1.9rem + 1.6vw, 3.5rem);
+  --font-size-4xl: clamp(2.75rem, 2.2rem + 2.5vw, 5rem);
+}
+
+@theme inline {
+  --color-cemento-900: var(--color-cemento-900);
+  --color-cemento-700: var(--color-cemento-700);
+  --color-cemento-500: var(--color-cemento-500);
+  --color-cemento-300: var(--color-cemento-300);
+  --color-cemento-100: var(--color-cemento-100);
+
+  --color-arcilla-700: var(--color-arcilla-700);
+  --color-arcilla-500: var(--color-arcilla-500);
+  --color-arcilla-300: var(--color-arcilla-300);
+
+  --color-madera-700: var(--color-madera-700);
+  --color-madera-500: var(--color-madera-500);
+
+  --color-cal-100: var(--color-cal-100);
+  --color-cal-050: var(--color-cal-050);
+
+  --color-acento-amarillo-700: var(--color-acento-amarillo-700);
+  --color-acento-amarillo-500: var(--color-acento-amarillo-500);
+  --color-acento-amarillo-300: var(--color-acento-amarillo-300);
+  --color-acento-azul-700: var(--color-acento-azul-700);
+  --color-acento-azul-500: var(--color-acento-azul-500);
+
+  --color-estado-error: var(--color-estado-error);
+  --color-estado-exito: var(--color-estado-exito);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-public-sans);
+
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-base);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+  --text-2xl: var(--font-size-2xl);
+  --text-3xl: var(--font-size-3xl);
+  --text-4xl: var(--font-size-4xl);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Textura sutil de grano en fondos — sobria, no decorativa */
+.textura-grano {
+  position: relative;
+}
+.textura-grano::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Foco visible accesible — nunca outline: none sin reemplazo */
+:focus-visible {
+  outline: 3px solid var(--color-acento-azul-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
