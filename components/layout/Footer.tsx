@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { config } from "@/lib/config";
 
 export function Footer() {
@@ -20,9 +21,9 @@ export function Footer() {
           >
             Ver la VAKI
           </a>
-          <a href="/catalogo" className="hover:text-[var(--color-arcilla-700)]">
+          <Link href="/catalogo" className="hover:text-[var(--color-arcilla-700)]">
             Catálogo
-          </a>
+          </Link>
           <a
             href="mailto:contacto@casacolombia.co"
             className="hover:text-[var(--color-arcilla-700)]"
