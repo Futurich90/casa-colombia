@@ -15,7 +15,7 @@ export function Header() {
           href="/"
           className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight text-[var(--color-cemento-900)]"
         >
-          Casa Colombia
+          Mi Casa Colombia
         </Link>
 
         <nav className="hidden items-center gap-8 font-sans text-sm text-[var(--color-cemento-700)] sm:flex">

@@ -6,7 +6,7 @@ export interface Stage {
 }
 
 /**
- * Etapas de construcción de la Casa Colombia, atadas al % de la meta.
+ * Etapas de construcción de Mi Casa Colombia, atadas al % de la meta.
  * Ver README del componente para el detalle de cada etapa.
  */
 export const STAGES: Stage[] = [

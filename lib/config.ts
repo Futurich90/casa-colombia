@@ -4,8 +4,8 @@
  */
 export const config = {
   vakiUrl: "https://vaki.co/vaki/juntos-por-colombia-fspc",
-  metaCOP: 1_000_000_000,
-  organizacion: "Casa Colombia",
+  metaCOP: 50_000_000,
+  organizacion: "Mi Casa Colombia",
   zonasAfectadas: [
     { departamento: "Chocó", municipio: "San José del Palmar" },
     { departamento: "Risaralda", municipio: "Pereira" },

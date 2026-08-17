@@ -1,7 +1,7 @@
 import type { Transition, Variants } from "motion/react";
 
 /**
- * Sistema de motion de Casa Colombia.
+ * Sistema de motion de Mi Casa Colombia.
  * Toda animación del sitio se construye a partir de estos tokens.
  * Un componente que necesite un easing o duración nuevos los agrega
  * aquí, nunca los hardcodea inline.

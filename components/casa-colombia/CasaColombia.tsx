@@ -85,6 +85,10 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
   const cieloDia = useTransform(smoothedProgress, [0, 100], [0, 1]);
   const cieloTinte = useTransform(cieloDia, (v) => v * 0.12);
 
+  // Materiales regados en el piso: presentes al inicio, se van usando (y
+  // desapareciendo) a medida que la construcción avanza.
+  const materialesOpacity = useTransform(smoothedProgress, [0, 15, 65], [1, 1, 0]);
+
   const bricks = Array.from({ length: BRICK_ROWS * BRICK_COLS }, (_, i) => {
     const row = Math.floor(i / BRICK_COLS); // 0 = fila superior
     const col = i % BRICK_COLS;
@@ -134,10 +138,11 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
 
   return (
     <svg
-      viewBox="0 0 800 600"
+      viewBox="0 130 800 470"
+      preserveAspectRatio="xMidYMax slice"
       className={className}
       role="img"
-      aria-label={`Casa Colombia en construcción, ${Math.round(progress)}% de la meta alcanzado`}
+      aria-label={`Mi Casa Colombia en construcción, ${Math.round(progress)}% de la meta alcanzado`}
     >
       <defs>
         <filter id={glowFilterId} x="-100%" y="-100%" width="300%" height="300%">
@@ -163,6 +168,28 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
       {/* Suelo */}
       <rect x={0} y={GROUND_Y} width={800} height={600 - GROUND_Y} fill="var(--color-cemento-500)" opacity={0.25} />
 
+      {/* Materiales en el piso: se van "usando" y desaparecen con el progreso */}
+      <motion.g style={{ opacity: reducedMotion ? materialesOpacity.get() : materialesOpacity }}>
+        {/* Pila de ladrillos, izquierda */}
+        <g>
+          <rect x={70} y={GROUND_Y + 8} width={22} height={14} fill="var(--color-arcilla-500)" stroke="var(--color-arcilla-700)" strokeWidth={1} />
+          <rect x={94} y={GROUND_Y + 8} width={22} height={14} fill="var(--color-arcilla-500)" stroke="var(--color-arcilla-700)" strokeWidth={1} />
+          <rect x={82} y={GROUND_Y - 6} width={22} height={14} fill="var(--color-arcilla-300)" stroke="var(--color-arcilla-700)" strokeWidth={1} />
+        </g>
+        {/* Tablones de madera, izquierda */}
+        <line x1={40} y1={GROUND_Y + 26} x2={130} y2={GROUND_Y + 14} stroke="var(--color-madera-500)" strokeWidth={6} strokeLinecap="round" />
+        <line x1={48} y1={GROUND_Y + 36} x2={128} y2={GROUND_Y + 26} stroke="var(--color-madera-700)" strokeWidth={6} strokeLinecap="round" />
+
+        {/* Bultos de cemento, derecha */}
+        <rect x={640} y={GROUND_Y + 4} width={30} height={22} rx={3} fill="var(--color-cemento-500)" stroke="var(--color-cemento-700)" strokeWidth={1} />
+        <rect x={664} y={GROUND_Y + 10} width={30} height={22} rx={3} fill="var(--color-cemento-500)" stroke="var(--color-cemento-700)" strokeWidth={1} />
+        {/* Montículo de arena, derecha */}
+        <path
+          d={`M700 ${GROUND_Y + 30} L735 ${GROUND_Y + 30} L722 ${GROUND_Y + 2} Z`}
+          fill="var(--color-cemento-300)"
+        />
+      </motion.g>
+
       {/*
         Plano de referencia: la silueta completa de la casa, siempre presente
         desde 0%. Es lo que falta por construir — a medida que cada etapa
@@ -184,6 +211,7 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
         <rect x={WALL_X + WALL_W / 2 - 30} y={WALL_BOTTOM - 90} width={60} height={90} />
         <path d={`M${roofEaveLeft.x} ${roofEaveLeft.y} L${ROOF_APEX.x} ${ROOF_APEX.y} L${roofEaveRight.x} ${roofEaveRight.y}`} />
         <rect x={chimneyBase.x - 9} y={chimneyBase.y - 42} width={18} height={44} />
+        <rect x={ROOF_APEX.x - 76} y={272} width={152} height={32} rx={3} />
       </g>
 
       {/* Etapa 1 — Terreno y replanteo */}
@@ -274,6 +302,38 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
         <line x1={WALL_X - 20} y1={WALL_TOP} x2={ROOF_APEX.x} y2={ROOF_APEX.y} stroke="var(--color-madera-700)" strokeWidth={5} />
         <line x1={WALL_X + WALL_W + 20} y1={WALL_TOP} x2={ROOF_APEX.x} y2={ROOF_APEX.y} stroke="var(--color-madera-700)" strokeWidth={5} />
         <line x1={WALL_X - 20} y1={WALL_TOP} x2={WALL_X + WALL_W + 20} y2={WALL_TOP} stroke="var(--color-madera-700)" strokeWidth={4} />
+      </motion.g>
+
+      {/* Letrero "COLOMBIA" en el gablete, se levanta junto con la estructura del techo */}
+      <motion.g
+        style={{
+          opacity: reducedMotion ? techoAppear.get() : techoAppear,
+          scale: reducedMotion ? 1 : roofScale,
+          transformOrigin: `${ROOF_APEX.x}px ${WALL_TOP}px`,
+        }}
+      >
+        <rect
+          x={ROOF_APEX.x - 76}
+          y={272}
+          width={152}
+          height={32}
+          rx={3}
+          fill="var(--color-cal-050)"
+          stroke="var(--color-madera-700)"
+          strokeWidth={2}
+        />
+        <text
+          x={ROOF_APEX.x}
+          y={294}
+          textAnchor="middle"
+          fontSize={17}
+          fontWeight={700}
+          letterSpacing={1}
+          fill="var(--color-arcilla-700)"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          COLOMBIA
+        </text>
       </motion.g>
 
       {/* Etapa 6 — Tejas y acabados */}

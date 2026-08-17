@@ -83,7 +83,7 @@ export function ProductDetail({ product }: { product: Product }) {
           </div>
 
           <p className="mb-6 font-sans text-sm text-[var(--color-arcilla-700)]">
-            Donar este monto aporta {aporte < 0.01 ? "<0.01" : aporte.toFixed(2)}% a la Casa Colombia
+            Donar este monto aporta {aporte < 0.01 ? "<0.01" : aporte.toFixed(2)}% a Mi Casa Colombia
           </p>
 
           <motion.button

@@ -20,7 +20,7 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Casa Colombia — Reconstruyamos juntos",
+  title: "Mi Casa Colombia — Reconstruyamos juntos",
   description:
     "Ve cuánto cuestan en el mercado los materiales para reconstruir después del terremoto en Colombia. El 100% de tu donación se transfiere directamente a la campaña oficial en VAKI.",
 };

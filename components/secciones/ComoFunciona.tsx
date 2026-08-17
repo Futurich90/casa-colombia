@@ -20,7 +20,7 @@ const PASOS = [
   },
   {
     numero: "03",
-    titulo: "La Casa Colombia crece",
+    titulo: "Mi Casa Colombia crece",
     texto: "Tu donación levanta una parte real de la casa: cimientos, muros, techo, hasta que la meta se cumple.",
     span: "md:col-span-4",
     offset: "md:mt-8",

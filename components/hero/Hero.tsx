@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { CasaColombia } from "@/components/casa-colombia/CasaColombia";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { CasaProgressExplorer } from "./CasaProgressExplorer";
 import { useCasaStore } from "@/store/useCasaStore";
 import { config } from "@/lib/config";
 import { fadeUp, staggerContainer, revealMask, easeOut } from "@/lib/motion";
@@ -15,6 +16,8 @@ export function Hero() {
   const recaudadoCOP = useCasaStore((s) => s.recaudadoCOP);
   const progress = useCasaStore((s) => s.progress);
   const cargarRecaudado = useCasaStore((s) => s.cargarRecaudado);
+  const [preview, setPreview] = useState<number | null>(null);
+  const displayProgress = preview ?? progress;
 
   useEffect(() => {
     cargarRecaudado();
@@ -34,7 +37,7 @@ export function Hero() {
     <section
       ref={ref}
       className="textura-grano relative flex flex-col overflow-hidden md:min-h-[100svh]"
-      aria-label="La Casa Colombia y el estado de la recaudación"
+      aria-label="Mi Casa Colombia y el estado de la recaudación"
     >
       {/*
         Envoltorio de fondo fijado al alto del primer viewport (100svh), no al
@@ -65,20 +68,20 @@ export function Hero() {
         derecha para no competir con el texto.
       */}
       <motion.div
-        className="flex justify-center bg-gradient-to-b from-[var(--color-cal-050)] to-[var(--color-cemento-100)] pt-10 pb-2 md:pointer-events-none md:absolute md:inset-x-0 md:bottom-0 md:justify-end md:bg-none md:pb-0 md:pt-0 md:pr-8 lg:pr-16"
+        className="flex justify-center bg-gradient-to-b from-[var(--color-cal-050)] to-[var(--color-cemento-100)] pt-4 pb-2 md:pointer-events-none md:absolute md:inset-x-0 md:bottom-0 md:justify-end md:bg-none md:pb-0 md:pt-0 md:pr-4 lg:pr-10"
         style={{
           y: reducedMotion ? 0 : casaY,
           scale: reducedMotion ? 1 : casaScale,
         }}
       >
         <CasaColombia
-          progress={progress}
-          className="h-[38svh] w-full max-w-md sm:h-[46svh] sm:max-w-lg md:h-[55svh] md:max-w-2xl lg:h-[68svh] lg:max-w-3xl"
+          progress={displayProgress}
+          className="h-[54svh] w-full max-w-lg sm:h-[64svh] sm:max-w-xl md:h-[82svh] md:max-w-3xl lg:h-[92svh] lg:max-w-5xl"
         />
       </motion.div>
 
       {/* Contenido: en móvil sigue el flujo debajo de la casa; desde md+ flota como card sobre la escena */}
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end px-6 pb-16 pt-8 sm:px-10 md:pt-32">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end px-6 pb-16 pt-6 sm:px-10 md:pt-16">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
@@ -98,7 +101,7 @@ export function Hero() {
               transition={{ duration: 0.8, ease: easeOut }}
               className="font-[family-name:var(--font-display)] text-[var(--font-size-3xl)] font-semibold leading-[1.05] tracking-tight text-[var(--color-cemento-900)]"
             >
-              Cada material que donas levanta la Casa Colombia
+              Cada material que donas levanta Mi Casa Colombia
             </motion.h1>
           </div>
 
@@ -120,9 +123,13 @@ export function Hero() {
               <AnimatedCounter value={recaudadoCOP} />
             </div>
             <div className="font-sans text-sm text-[var(--color-cemento-500)]">
-              de la meta de {new Intl.NumberFormat("es-CO").format(config.metaCOP)} COP ·{" "}
-              {progress.toFixed(1)}%
+              de la meta de {new Intl.NumberFormat("es-CO").format(config.metaCOP)} COP
             </div>
+            <CasaProgressExplorer
+              progress={progress}
+              preview={preview}
+              onPreviewChange={setPreview}
+            />
           </motion.div>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">

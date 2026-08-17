@@ -77,7 +77,7 @@ export function ProductCard({
           {formatCOP(product.precioCOP)} / {product.unidad}
         </p>
         <p className="font-sans text-xs text-[var(--color-arcilla-700)]">
-          Aporta {aporte < 0.01 ? "<0.01" : aporte.toFixed(2)}% a la Casa Colombia
+          Aporta {aporte < 0.01 ? "<0.01" : aporte.toFixed(2)}% a Mi Casa Colombia
         </p>
       </Link>
     </motion.div>

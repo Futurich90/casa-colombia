@@ -143,7 +143,7 @@ export function CartDrawer() {
                     <span className="font-semibold text-[var(--color-arcilla-700)]">
                       {formatCOP(totalCOP)}
                     </span>{" "}
-                    a la Casa Colombia
+                    a Mi Casa Colombia
                   </p>
                   <div className="mb-1 flex justify-between font-sans text-xs text-[var(--color-cemento-500)]">
                     <span>Progreso de la meta</span>
