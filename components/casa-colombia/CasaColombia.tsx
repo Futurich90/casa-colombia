@@ -81,6 +81,9 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
 
   const roofScale = useTransform(techoAppear, [0, 1], [0.85, 1]);
 
+  // Letrero: está desde el día uno, torcido, y se endereza con el progreso
+  const signRotation = useTransform(smoothedProgress, [0, 100], [-13, 0]);
+
   // Cielo: amanece a medida que la casa avanza (tinte muy sutil, no una caja opaca)
   const cieloDia = useTransform(smoothedProgress, [0, 100], [0, 1]);
   const cieloTinte = useTransform(cieloDia, (v) => v * 0.12);
@@ -211,7 +214,6 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
         <rect x={WALL_X + WALL_W / 2 - 30} y={WALL_BOTTOM - 90} width={60} height={90} />
         <path d={`M${roofEaveLeft.x} ${roofEaveLeft.y} L${ROOF_APEX.x} ${ROOF_APEX.y} L${roofEaveRight.x} ${roofEaveRight.y}`} />
         <rect x={chimneyBase.x - 9} y={chimneyBase.y - 42} width={18} height={44} />
-        <rect x={ROOF_APEX.x - 76} y={272} width={152} height={32} rx={3} />
       </g>
 
       {/* Etapa 1 — Terreno y replanteo */}
@@ -304,12 +306,15 @@ export function CasaColombia({ progress, className }: CasaColombiaProps) {
         <line x1={WALL_X - 20} y1={WALL_TOP} x2={WALL_X + WALL_W + 20} y2={WALL_TOP} stroke="var(--color-madera-700)" strokeWidth={4} />
       </motion.g>
 
-      {/* Letrero "COLOMBIA" en el gablete, se levanta junto con la estructura del techo */}
+      {/*
+        Letrero "COLOMBIA": está presente desde el 0%, medio caído — como
+        recién clavado en la obra — y se va enderezando a medida que
+        avanza el progreso, hasta quedar nivelado al 100%.
+      */}
       <motion.g
         style={{
-          opacity: reducedMotion ? techoAppear.get() : techoAppear,
-          scale: reducedMotion ? 1 : roofScale,
-          transformOrigin: `${ROOF_APEX.x}px ${WALL_TOP}px`,
+          rotate: reducedMotion ? 0 : signRotation,
+          transformOrigin: `${ROOF_APEX.x - 60}px 272px`,
         }}
       >
         <rect
