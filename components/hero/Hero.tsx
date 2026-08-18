@@ -62,31 +62,34 @@ export function Hero() {
       </div>
 
       {/*
-        La casa: protagonista visual. En móvil vive en el flujo normal, arriba
-        del texto — un overlay la habría tapado por completo en pantallas
-        angostas. Desde md+ se convierte en un fondo grande desplazado a la
-        derecha para no competir con el texto.
+        Casa y contenido comparten un contenedor flex con columnas propias
+        (no posicionamiento absoluto superpuesto): así es imposible que se
+        invadan entre sí en ningún ancho. En móvil es una sola columna
+        (casa arriba, texto abajo); desde md+ se parten en dos columnas
+        lado a lado, con la casa a la derecha.
       */}
-      <motion.div
-        className="flex justify-center bg-gradient-to-b from-[var(--color-cal-050)] to-[var(--color-cemento-100)] pt-4 pb-2 md:pointer-events-none md:absolute md:inset-x-0 md:bottom-0 md:justify-end md:bg-none md:pb-0 md:pt-0 md:pr-4 lg:pr-10"
-        style={{
-          y: reducedMotion ? 0 : casaY,
-          scale: reducedMotion ? 1 : casaScale,
-        }}
-      >
-        <CasaColombia
-          progress={displayProgress}
-          className="h-[54svh] w-full max-w-lg sm:h-[64svh] sm:max-w-xl md:h-[82svh] md:max-w-3xl lg:h-[92svh] lg:max-w-5xl"
-        />
-      </motion.div>
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col md:flex-row md:items-stretch">
+        {/* Casa */}
+        <motion.div
+          className="flex flex-1 items-end justify-center bg-gradient-to-b from-[var(--color-cal-050)] to-[var(--color-cemento-100)] pt-4 pb-2 md:order-2 md:bg-none md:pb-0 md:pt-0 md:pr-6 lg:pr-12"
+          style={{
+            y: reducedMotion ? 0 : casaY,
+            scale: reducedMotion ? 1 : casaScale,
+          }}
+        >
+          <CasaColombia
+            progress={displayProgress}
+            className="h-[54svh] w-full max-w-lg sm:h-[64svh] sm:max-w-xl md:h-full md:max-w-none lg:h-full"
+          />
+        </motion.div>
 
-      {/* Contenido: en móvil sigue el flujo debajo de la casa; desde md+ flota como card sobre la escena */}
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end px-6 pb-16 pt-6 sm:px-10 md:pt-16">
+        {/* Contenido: en móvil sigue el flujo debajo de la casa; desde md+ es la columna izquierda */}
+        <div className="flex flex-1 flex-col justify-end px-6 pb-16 pt-6 sm:px-10 md:order-1 md:pt-16">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="max-w-md rounded-sm border border-[var(--color-cemento-300)]/60 bg-[var(--color-cal-050)] p-8 shadow-[0_8px_40px_-12px_rgba(28,26,23,0.25)] md:bg-[var(--color-cal-050)]/95 md:backdrop-blur-sm"
+          className="max-w-md rounded-sm border border-[var(--color-cemento-300)]/60 bg-[var(--color-cal-050)] p-8 shadow-[0_8px_40px_-12px_rgba(28,26,23,0.25)]"
         >
           <motion.p
             variants={fadeUp}
@@ -153,6 +156,7 @@ export function Hero() {
             </motion.div>
           </motion.div>
         </motion.div>
+        </div>
       </div>
     </section>
   );
